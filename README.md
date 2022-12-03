@@ -1,6 +1,13 @@
 # remedicok-2023
 Remedicok multifront 
 
+Iniciar 
+vue ui
+root /opt/lampp/manager-linux-x64.run
+
+Directorio de despliegues
+/opt/lampp/htdocs/rm
+
 Node 
 referencia : https://phoenixnap.com/kb/update-node-js-version
 Update Node.js with NVM (Node Version Manager)

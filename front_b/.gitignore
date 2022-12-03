@@ -1,6 +1,5 @@
 .DS_Store
-/front_a/node_modules
-/front_b/node_modules
+node_modules
 /dist
 
 
