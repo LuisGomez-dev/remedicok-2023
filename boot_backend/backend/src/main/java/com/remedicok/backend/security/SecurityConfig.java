@@ -23,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // Deshabilita la protección contra CSRF
-        http.csrf(csrf -> csrf.disable());
+        http.csrf(csrf -> csrf.disable()).cors();
 
         // Configuración de los filtros de seguridad
         configureFilters(http);
