@@ -12,12 +12,8 @@ import com.remedicok.backend.data.personal.UsuarioRepository;
 @Service
 public class UsuarioService {
 
-    private final UsuarioRepository usuarioRepository;
-
     @Autowired
-    public UsuarioService(UsuarioRepository usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
-    }
+    UsuarioRepository usuarioRepository;
 
     public Usuario crearUsuario(String nombre, String apellido, String correoElectronico, String contrasena) {
         Usuario usuario = new Usuario();
@@ -30,7 +26,7 @@ public class UsuarioService {
         usuario.setFechaRegistro(new Date());
         usuario.setFechaModificacion(new Date());
 
-        return usuarioRepository.save(usuario); // Guarda el usuario en la base de datos
+        return usuarioRepository.save(usuario); 
     }
 
     public void obtenerTodosLosUsuarios(Map<String, Object> result) {

@@ -1,6 +1,6 @@
-package com.remedicok.backend.dto.security;
+package com.remedicok.backend.security;
 
-public class LoginRequest {
+public class LoginRequestDTO {
 
     private String usuario;
     private String contrasena;

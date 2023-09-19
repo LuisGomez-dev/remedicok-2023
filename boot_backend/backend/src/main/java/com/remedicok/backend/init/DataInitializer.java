@@ -40,9 +40,9 @@ public class DataInitializer implements CommandLineRunner {
         
 
         // Llenar la tabla de Perfiles
-        Perfil perfil1 = perfilRepository.save(new Perfil("Administrador", "Perfil de administrador con acceso completo"));
-        Perfil perfil2 = perfilRepository.save(new Perfil("Usuario Estándar", "Perfil de usuario con acceso limitado"));
-        Perfil perfil3 = perfilRepository.save(new Perfil("Médico", "Perfil de médico con acceso a información de pacientes"));
+        Perfil perfil1 = perfilRepository.save(new Perfil("ROLE_ADMIN", "Perfil de administrador con acceso completo"));
+        Perfil perfil2 = perfilRepository.save(new Perfil("ROLE_USER", "Perfil de usuario con acceso limitado"));
+        Perfil perfil3 = perfilRepository.save(new Perfil("ROLE_DOCTOR", "Perfil de médico con acceso a información de pacientes"));
 
         // Llenar la tabla de Pantallas
         Pantalla pantalla1 = pantallaRepository.save(new Pantalla("Panel de Control", "Pantalla principal de administración"));

@@ -1,5 +1,6 @@
-package com.remedicok.backend.controller.users;
+package com.remedicok.backend.security;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.remedicok.backend.controller.ResultController;
-import com.remedicok.backend.dto.security.LoginRequest;
-import com.remedicok.backend.service.security.AuthService;
 
 @RestController
 public class AuthController extends ResultController  {
@@ -22,15 +21,16 @@ public class AuthController extends ResultController  {
     @PostMapping(path="/api/login",
 	consumes = MediaType.APPLICATION_JSON_VALUE, 
     produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<Map<String, Object>>  authenticate(@RequestBody LoginRequest localUser) {
+    ResponseEntity<Map<String, Object>>  authenticate(@RequestBody LoginRequestDTO localUser) {
+        this.objResult = new HashMap<>();
+        authService.procesaCredencial(objResult, localUser);
+        if(authService.isCredencialValida()){
+            responseEntity = ResponseEntity.ok(objResult);
+        }else{
+            responseEntity = ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(objResult);
+        }
 
-		if(authService.esValido(localUser) ) {
-			authService.getJWTToken(objResult, localUser.getUsuario() );
-            return ResponseEntity.ok(objResult);
-		} else {
-			objResult.put("error", "credencial no valida");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(objResult);
-		}
+        return responseEntity;
 	}
 
 }
