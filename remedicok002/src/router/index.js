@@ -26,16 +26,12 @@ export default router
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: () => import(/* webpackChunkName: "about" */ '../views/public/LoginView.vue')
-  },
-  {
-    path: '/about',
-    name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
+  { path: '/',      name: 'home',  component: () => import('../views/public/LoginView.vue')  },
+  { path: '/admin/dashboard', name: 'adminDashBoard', component: () => import('../views/admin/AdmindbView.vue')  },
+  { path: '/paciente/dashboard', name: 'pacienteDashBoard', component: () => import('../views/paciente/PacientedbView.vue')  },
+  { path: '/base/dashboard', name: 'baseDashBoard', component: () => import('../views/base/BasedbView.vue')  },
+  { path: '/veterinario/dashboard', name: 'veterinarioDashBoard', component: () => import('../views/veterinario/VeterinariodbView.vue')  },
+  { path: '/about', name: 'about', component: () => import('../views/AboutView.vue')  }
 ]
 
 const router = createRouter({

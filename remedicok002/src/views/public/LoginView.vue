@@ -38,32 +38,65 @@
     import config from "@/config/config"
 
     export default {
-    name: "LoginView",
-    data() {
-        return {
-        usuario: "",
-        contrasena: ""
-        };
-    },
-    methods: {
+      name: "LoginView",
+      data() {
+          return {
+          usuario: "",
+          contrasena: ""
+          };
+      },
+      methods: {
         async login(event) {
-        event.preventDefault();
-        try {
-            // eslint-disable-next-line no-debugger
-            debugger; // Esta línea activará el depurador, pero la regla está desactivada temporalmente
+          event.preventDefault();
+          try {
+              const userProfile = await this.getUserProfile();              
+              // Actualiza los datos en el store global
+              this.$store.dispatch('globalUserData', userProfile );
+              this.redirectBasedOnProfile(userProfile);
 
-            const response = await axios.post(`${config.apiBaseUrl}/login`, {
-            usuario: this.usuario,
-            contrasena: this.contrasena
-            });
-            // Maneja la respuesta del servidor aquí
-            console.log(response.data); // Puedes hacer algo con la respuesta
-        } catch (error) {
-            // Maneja los errores aquí
-            console.error(error);
-        }
-        }
-    }
+
+          } catch (error) {
+              console.error(error);
+          }
+        },
+
+        async getUserProfile() {
+          // Realiza una solicitud al servidor para obtener el perfil del usuario
+          const response = await axios.post(`${config.apiBaseUrl}/login`, {
+              usuario: this.usuario,
+              contrasena: this.contrasena
+              });
+
+          console.log(response.data); // Puedes hacer algo con la respuesta
+          return response.data; // Suponiendo que el servidor devuelve los datos del perfil del usuario
+        },
+
+        redirectBasedOnProfile(userProfile) {
+          const userRoles = userProfile.usuario.perfiles.map((perfil) => perfil.nombre); // Lista de roles del usuario
+
+              // eslint-disable-next-line no-debugger
+              debugger; // Esta línea activará el depurador, pero la regla está desactivada temporalmente
+          this.$store.dispatch('globalProfileData', userRoles );
+          switch (true) {
+            case userRoles.includes('ROLE_ADMIN'):
+              // Redirigir al usuario a la ruta de administrador
+              this.$router.push('/admin/dashboard');
+              break;
+            case userRoles.includes('ROLE_VETERINARIO'):
+              // Redirigir al usuario a la ruta de veterinario
+              this.$router.push('/veterinario/dashboard');
+              break;
+            case userRoles.includes('ROLE_PACIENTE'):
+              // Redirigir al usuario a la ruta de paciente
+              this.$router.push('/paciente/dashboard');
+              break;
+            default:
+              // Redirigir a una ruta predeterminada para otros roles o manejarlo según sea necesario
+              this.$router.push('/base/dashboard');
+              break;
+          }
+        },
+      }
     };
 
 
