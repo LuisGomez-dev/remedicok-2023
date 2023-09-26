@@ -16,8 +16,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "perfiles")
-public class Perfil {
+@Table(name = "rol")
+public class Rol {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,30 +26,21 @@ public class Perfil {
     private String nombre;
     private String descripcion;
     
-    // Otros campos de perfil
+    // Otros campos de Rol
+       
     
-    @ManyToMany
-    @JoinTable(
-        name = "perfiles_pantallas",
-        joinColumns = @JoinColumn(name = "perfil_id"),
-        inverseJoinColumns = @JoinColumn(name = "pantalla_id")
-        )
-    
-    private Set<Pantalla> pantallas;
-    
-    @ManyToMany(mappedBy = "perfiles")
+    @ManyToMany(mappedBy = "Roles")
     @JsonBackReference // Esta es la referencia inversa
     private Set<Usuario> usuarios;
 
     // Constructor
-    public Perfil() {
-        this.pantallas = new HashSet<>();
+    public Rol() {
+
     }
     
-    public Perfil(String nombre, String descripcion) {
+    public Rol(String nombre, String descripcion) {
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.pantallas = new HashSet<>();
     }
 
     public Long getId() {
@@ -74,14 +65,6 @@ public class Perfil {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public Set<Pantalla> getPantallas() {
-        return pantallas;
-    }
-
-    public void setPantallas(Set<Pantalla> pantallas) {
-        this.pantallas = pantallas;
     }
 
     public Set<Usuario> getUsuarios() {

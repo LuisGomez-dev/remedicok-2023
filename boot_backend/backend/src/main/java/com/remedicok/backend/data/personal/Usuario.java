@@ -33,21 +33,23 @@ public class Usuario {
     @JsonIgnore // Evitar que la contraseña se serialice
     private String contrasena;
     
+    @JsonIgnore
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaRegistro;
 
+    @JsonIgnore
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModificacion;
 
     @ManyToMany
     @JoinTable(
-        name = "usuarios_perfiles",
+        name = "usuarios_Roles",
         joinColumns = @JoinColumn(name = "usuario_id"),
-        inverseJoinColumns = @JoinColumn(name = "perfil_id")
+        inverseJoinColumns = @JoinColumn(name = "Rol_id")
     )
 
     @JsonIgnoreProperties("usuarios") // Evitar recursión infinita
-    private Set<Perfil> perfiles;
+    private Set<Rol> Roles;
 
     public Long getId() {
         return id;
@@ -106,7 +108,7 @@ public class Usuario {
     }
 
     public Usuario() {
-        this.perfiles = new HashSet<>();
+        this.Roles = new HashSet<>();
     }
 
     public Usuario(String nombre, String apellido, String correoElectronico, String contrasena) {
@@ -114,15 +116,15 @@ public class Usuario {
         this.apellido = apellido;
         this.correoElectronico = correoElectronico;
         this.contrasena = contrasena;
-        this.perfiles = new HashSet<>();
+        this.Roles = new HashSet<>();
     }
 
-    public Set<Perfil> getPerfiles() {
-        return perfiles;
+    public Set<Rol> getRoles() {
+        return Roles;
     }
 
-    public void setPerfiles(Set<Perfil> perfiles) {
-        this.perfiles = perfiles;
+    public void setRoles(Set<Rol> Roles) {
+        this.Roles = Roles;
     }
 
 

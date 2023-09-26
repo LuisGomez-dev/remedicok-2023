@@ -15,7 +15,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import com.remedicok.backend.data.personal.Perfil;
+import com.remedicok.backend.data.personal.Rol;
 import com.remedicok.backend.data.personal.Usuario;
 import com.remedicok.backend.data.personal.UsuarioRepository;
 import com.remedicok.backend.service.personal.UsuarioService;
@@ -46,8 +46,8 @@ public class AuthService {
 		Date now = new Date();
 		Date expirationDate = new Date(now.getTime() + 3600000); // 1 hora de expiración
 
-		Set<Perfil> perfilesUsuario = usuario.getPerfiles(); // Obtén los perfiles del usuario
-		List<GrantedAuthority> grantedAuthorities = createAuthoritiesFromPerfiles(perfilesUsuario);
+		Set<Rol> RolesUsuario = usuario.getRoles(); // Obtén los Roles del usuario
+		List<GrantedAuthority> grantedAuthorities = createAuthoritiesFromRoles(RolesUsuario);
 		
 		String token = Jwts
 				.builder()
@@ -65,11 +65,11 @@ public class AuthService {
 		objResult.put("token", "Bearer " + token);
 	}
 
-	private List<GrantedAuthority> createAuthoritiesFromPerfiles(Set<Perfil> perfiles) {
+	private List<GrantedAuthority> createAuthoritiesFromRoles(Set<Rol> Roles) {
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		
-		for (Perfil perfil : perfiles) {
-			String roleName = perfil.getNombre();
+		for (Rol Rol : Roles) {
+			String roleName = Rol.getNombre();
 			authorities.add(new SimpleGrantedAuthority(roleName));
 		}
 		
