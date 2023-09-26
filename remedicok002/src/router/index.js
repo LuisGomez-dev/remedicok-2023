@@ -26,7 +26,8 @@ export default router
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
-  { path: '/',      name: 'home',  component: () => import('../views/public/LoginView.vue')  },
+  { path: '/',      name: 'home',  component: () => import('../views/public/PublicView.vue')  },
+  { path: '/login',      name: 'login',  component: () => import('../views/public/LoginView.vue')  },
   { path: '/admin/dashboard', name: 'adminDashBoard', component: () => import('../views/admin/AdmindbView.vue')  },
   { path: '/paciente/dashboard', name: 'pacienteDashBoard', component: () => import('../views/paciente/PacientedbView.vue')  },
   { path: '/base/dashboard', name: 'baseDashBoard', component: () => import('../views/base/BasedbView.vue')  },

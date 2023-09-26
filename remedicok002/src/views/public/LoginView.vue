@@ -74,8 +74,6 @@
         redirectBasedOnProfile(userProfile) {
           const userRoles = userProfile.usuario.perfiles.map((perfil) => perfil.nombre); // Lista de roles del usuario
 
-              // eslint-disable-next-line no-debugger
-              debugger; // Esta línea activará el depurador, pero la regla está desactivada temporalmente
           this.$store.dispatch('globalProfileData', userRoles );
           switch (true) {
             case userRoles.includes('ROLE_ADMIN'):
