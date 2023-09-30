@@ -33,9 +33,8 @@
   </template>
   
   <script>
-
-    import axios from "axios";
-    import config from "@/config/config"
+    import { mapMutations } from 'vuex';
+    import  HttpClient from '@/utils/HttpClient';
 
     export default {
       name: "LoginView",
@@ -46,35 +45,29 @@
           };
       },
       methods: {
+        ...mapMutations(['setUserData', 'setToken', 'setProfileData']),
         async login(event) {
           event.preventDefault();
           try {
-              const userProfile = await this.getUserProfile();              
-              // Actualiza los datos en el store global
-              this.$store.dispatch('globalUserData', userProfile );
-              this.redirectBasedOnProfile(userProfile);
+              const response = await 
+              HttpClient.post(`/login`, {usuario: this.usuario,contrasena: this.contrasena });
 
+              const userProfile = response.data;
+              const userRoles = userProfile.usuario.roles.map((rol) => rol.nombre); 
+
+              // Guarda en el store global
+              this.setUserData(userProfile.usuario);
+              this.setToken(userProfile.token);
+              this.setProfileData(userRoles);
+
+              this.redirectBasedOnProfile(userRoles);
 
           } catch (error) {
               console.error(error);
           }
         },
 
-        async getUserProfile() {
-          // Realiza una solicitud al servidor para obtener el perfil del usuario
-          const response = await axios.post(`${config.apiBaseUrl}/login`, {
-              usuario: this.usuario,
-              contrasena: this.contrasena
-              });
-
-          console.log(response.data); // Puedes hacer algo con la respuesta
-          return response.data; // Suponiendo que el servidor devuelve los datos del perfil del usuario
-        },
-
-        redirectBasedOnProfile(userProfile) {
-          const userRoles = userProfile.usuario.perfiles.map((perfil) => perfil.nombre); // Lista de roles del usuario
-
-          this.$store.dispatch('globalProfileData', userRoles );
+        redirectBasedOnProfile(userRoles) {
           switch (true) {
             case userRoles.includes('ROLE_ADMIN'):
               // Redirigir al usuario a la ruta de administrador

@@ -1,22 +1,40 @@
 import { createStore } from 'vuex'
-import sessionModule from './session';
-
 
 export default createStore({
   state: {
-    //userData: null, // Aquí almacenarás los datos recuperados
-    //profileData: null, // Aquí almacenarás los datos recuperados
+    userData: null, // Aquí almacenas los datos del usuario
+    token: null, // Aquí almacenas el token
+    //tienePerfil: false, // Inicialmente, establecido en falso
+    profileData:null,
   },
   getters: {
-    getProfileData: (state) => state.profileData,
+    getUserData(state) {
+          // eslint-disable-next-line no-debugger
+          debugger;
+      return state.userData;
+    },
+    getProfileData(state) {
+      // eslint-disable-next-line no-debugger
+      debugger;
+      return state.profileData;
+    },
+    getToken(state) {
+      return state.token;
+    },
   },
   mutations: {
     setUserData(state, userData) {
       state.userData = userData;
     },
-
     setProfileData(state, profileData) {
       state.profileData = profileData;
+    },
+    setToken(state, token) {
+      state.token = token;
+    },
+    clearUserData(state) {
+      state.userData = null;
+      state.token = null;
     },
   },
   actions: {
@@ -27,8 +45,6 @@ export default createStore({
       commit('setProfileData', profileData);
     },
   },
-  modules: {
-    session: sessionModule,
-  },
+  modules: {},
 })
 
